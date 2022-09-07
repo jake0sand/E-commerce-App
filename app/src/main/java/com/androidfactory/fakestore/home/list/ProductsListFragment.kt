@@ -4,10 +4,16 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.asLiveData
 import com.androidfactory.fakestore.databinding.FragmentProductsListBinding
+import com.androidfactory.fakestore.home.list.composables.ProductCardItem
 import com.androidfactory.fakestore.model.ui.UiFilter
 import com.androidfactory.fakestore.model.ui.UiProduct
 import dagger.hilt.android.AndroidEntryPoint
@@ -37,6 +43,23 @@ class ProductsListFragment : Fragment() {
 
         val controller = UiProductEpoxyController(viewModel)
         binding.epoxyRecyclerView.setController(controller)
+
+        binding.epoxyRecyclerView.visibility = View.GONE
+        binding.composeView.setContent {
+
+            Column {
+                LazyColumn {
+                    items(20) {
+                        ProductCardItem(
+                            productTitle = "Fjallraven blah blah blah",
+                            productCategory = "Men's clothing",
+                            image = "https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg",
+                            modifier = Modifier.padding(vertical = 8.dp, horizontal = 16.dp)
+                        )
+                    }
+                }
+            }
+        }
 
         combine(
             viewModel.store.stateFlow.map { it.products },

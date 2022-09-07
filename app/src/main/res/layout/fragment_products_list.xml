@@ -18,4 +18,10 @@
         tools:itemCount="7"
         tools:listitem="@layout/epoxy_model_product_item" />
 
+    <androidx.compose.ui.platform.ComposeView
+        android:id="@+id/composeView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

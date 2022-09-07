@@ -1,5 +1,7 @@
 package com.androidfactory.fakestore.home.list.composables
 
+import android.inputmethodservice.Keyboard
+import android.media.Image
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -7,9 +9,11 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.ButtonDefaults.buttonColors
+import androidx.compose.material.MaterialTheme.colors
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterStart
 import androidx.compose.ui.Alignment.Companion.CenterVertically
@@ -32,7 +36,7 @@ fun ProductCardItem(
     productCategory: String,
     image: String,
     modifier: Modifier = Modifier
-    ) {
+) {
     Card(
         modifier = modifier
             .fillMaxWidth()
@@ -75,11 +79,14 @@ fun ProductCardItem(
                                 .weight(1f)
                         )
 
-                        var isFavorited by remember { mutableStateOf(false) }
+                        var isFavorited by rememberSaveable { mutableStateOf(false) }
                         IconButton(onClick = { isFavorited = !isFavorited }) {
-                            Image(
-                                imageVector = if (!isFavorited) Icons.Default.FavoriteBorder else Icons.Default.Favorite,
-                                contentDescription = ""
+                            Icon(
+                                imageVector =
+                                if (!isFavorited) Icons.Default.FavoriteBorder
+                                else Icons.Default.Favorite,
+                                contentDescription = "",
+                                tint = Color.White
                             )
                         }
 
@@ -145,8 +152,11 @@ fun ProductCardItem(
                             imageVector = Icons.Default.CheckCircle,
                             contentDescription = "",
                             tint = Color.Green,
-                            modifier = Modifier.size(16.dp).align(CenterStart)
-                                .clip(shape = CircleShape).background(Color.White)
+                            modifier = Modifier
+                                .size(16.dp)
+                                .align(CenterStart)
+                                .clip(shape = CircleShape)
+                                .background(Color.White)
                         )
                     }
                 }
@@ -162,10 +172,12 @@ private fun roundedCornerShape() = RoundedCornerShape(12.dp)
 @Composable
 fun ThisCard() {
     Column(Modifier.fillMaxSize()) {
-        ProductCardItem(modifier = Modifier.padding(16.dp),
-        productTitle = "Preview Title",
-        productCategory = "Men's Clothing",
-        image = "https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg")
+        ProductCardItem(
+            modifier = Modifier.padding(16.dp),
+            productTitle = "Preview Title",
+            productCategory = "Men's Clothing",
+            image = "https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg"
+        )
 
     }
 }
